@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "RentYouBike";
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent Your Bike</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: lightblue;
+        }
+
+        header {
+            background-color: #2441e0;
+            color: #fff;
+            padding: 10px 70px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            font-family: "Georgia", "Palatino", "serif";
+        }
+
+        main {
+            max-width: 8000px;
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 5px 5px 10px #888;
+        }
+
+        .bikes {
+            margin-bottom: 20px;
+        }
+
+        .precobike {
+            text-align: center;
+            max-width: 8000px;
+            margin: 0;
+            padding: 2px;
+            background-color: #ffffff;
+            box-shadow: 5px 5px 10px #2441e0;
+        }
+
+
+        select {
+            width: 40%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 500px;
+        }
+
+        input[type="submit"] {
+            background-color: #2441e0;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+
+        h1 {
+            font-style: oblique;
+            padding: 10px;
+            font-size: 24px;
+            margin-left: 50px;
+            background-color: #2441e0;
+            color: white;
+        }
+
+        label {
+            font-style: oblique;
+            font-family: "Georgia", "Palatino", "serif";
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Alugue a Sua Bike em Minutos!</h1>
+    </header>
+    <main>
+        <div class="bikes">
+        </div>
+        <div class="precobike">
+            <form id="precobike">
+                <label for="escolha">Escolha uma Bicicleta:</label>
+                <select id="escolha" name="bike">
+                </select>
+                <input type="submit" value="Alugar">
+            </form>
+        </div>
+    </main>
+    <script>
+      
+        const bikesDisponiveis = [
+            { id: 1, nome: "Caiçara", preco: 26 },
+            { id: 2, nome: "Bicicleta de Rodinhas", preco: 20 },
+            { id: 3, nome: "BMX", preco: 25 },
+            { id: 4, nome: "Mountain", preco: 22 },
+            { id: 5, nome: "Triciclo Familia", preco: 40 }
+        ];
+
+       
+        function opcoesDeBikes() {
+            const selecaoDeBike = document.getElementById("escolha");
+
+            bikesDisponiveis.forEach((bike) => {
+                const option = document.createElement("option");
+                option.value = bike.id;
+                option.textContent = `${bike.nome} 1 hora R$${bike.preco},00 `;
+                selecaoDeBike.appendChild(option);
+            });
+
+        }
+
+       
+        document.getElementById("precobike").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const selectedBikeId = document.getElementById("escolha").value;
+            const selectedBike = bikesDisponiveis.find((bike) => bike.id === parseInt(selectedBikeId));
+
+            if (selectedBike) {
+                alert(`Você alugou a ${selectedBike.nome} por R$${selectedBike.preco}.`);
+            } else {
+                alert("Escolha uma bicicleta válida.");
+            }
+        });
+
+      
+        window.addEventListener("load", opcoesDeBikes);
+
+    </script>
+</body>
+</html>

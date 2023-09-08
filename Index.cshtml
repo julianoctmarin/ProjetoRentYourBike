@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewData["Title"] = "RentYouBike";
+}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro RyB</title>
+    <style>
+        h1{
+            font-family: "Georgia", "Palatino", "serif";
+                  
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(255, 255, 255);
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        label, input {
+            display: block;
+            margin-bottom: 2px;
+            margin-left: 57px;
+            font-family: "Courier New", "Monaco", "monospace";
+            font-style: italic;
+            padding: 10px 20px;
+        }
+        label{
+            margin-left: 80px;
+        }
+        input[type="submit"] {
+            background-color: #2441e0;
+            color: #fff;
+            padding: 10px 70px;
+            border: none;
+            cursor: pointer;
+            width:250px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+            
+        }
+        input[type="date"] {
+            width: 250px; 
+        }
+       
+        .tituloUm{
+            font-style: oblique;
+            padding: 10px;
+            font-size: 24px;
+            margin-left: 50px;
+            background-color: #0056b3;
+            color: white;
+        }
+
+      
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="tituloUm">Cadastro de Clientes RyB</h1>
+        <form id="formCliente">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" placeholder="Digite seu nome" maxlength="100" required>
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" placeholder="Digite seu endereço" maxlength="200" required>
+            <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" placeholder="ex: (00) 0-0000-0000" required>
+            <label for="nascimento">Data de Nascimento:</label>
+            <input type="date" id="nasciemento" required>
+            <br>
+            <span id="mensagemErro" class="erro"></span>
+            <input type="submit" value="Cadastrar">
+        </form>
+
+    </div>
+
+    <script>
+        const formCliente = document.getElementById('formCliente');
+        const mensagemErro = document.getElementById('mensagemErro');
+        const listaCliente = document.getElementById('listaCliente');
+        const clientes = [];
+
+        formCliente.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nome = formCliente.nome.value;
+            const endereco = formCliente.endereco.value;
+            const telefone = formCliente.telefone.value;
+            const nascimento = formCliente.nascimento.value;
+
+            
+            if (clientes.some(cliente => cliente.nome === nome)) {
+                mensagemErro.textContent = 'Este cliente já está cadastrado.';
+                return;
+            }
+
+          
+            const novoCliente = { nome, endereco, telefone, nascimento };
+            clientes.push(novoCliente);
+
+         
+            formCliente.reset(botaoEditar);
+            mensagemErro.textContent = 'botaoEditar';
+
+           
+            updatelistaCliente();
+        });
+
+        function updatelistaCliente() {
+            listaCliente.innerHTML = '';
+            clientes.forEach(cliente => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Nome: ${cliente.nome}, Telefone: ${cliente.telefone}`;
+                listaCliente.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>
